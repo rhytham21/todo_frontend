@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./TodoList.module.css";
 import axios from "axios";
+import Task from "./task";
 
 function TodoList() {
   const [task, setTask] = useState({
@@ -37,6 +38,7 @@ function TodoList() {
       const response = await axios.post("http://localhost:4001/task/add", {
         task,
       });
+      setTask({taskName: "", taskDescription: ""})
       console.log("Response => ", response);
     } catch (error) {}
   };
@@ -45,15 +47,21 @@ function TodoList() {
     try {
       const response = await axios.get("http://localhost:4001/task/find");
       console.log(response?.data);
-      setTaskList(response?.data?.task);
+      setTaskList(response?.data?.tasks);
     } catch (error) {
-        console.error("Error fetching tasks", error)
+      console.error("Error fetching tasks", error);
     }
   };
+
+  useEffect(()=>{
+    getTasks();
+  },[])
 
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>Todo app</h1>
+
+      <div className={styles.formContainer}>
       <form onSubmit={handleSubmit}>
         <label>
           Enter Task:{" "}
@@ -64,6 +72,7 @@ function TodoList() {
               //   handleChange(event, "taskName");
             }}
             type="text"
+            placeholder="Enter task title"
           />
         </label>
         <br />
@@ -75,18 +84,23 @@ function TodoList() {
               onDescriptionNameChange(event);
             }}
             type="text"
+            placeholder="Enter task details and deadlines"
           />
         </label>
-        <button type="submit">Submit 1</button>
       </form>
-      <button onClick={handleSubmit}>Submit 2</button>
+      <button className= {styles.submitButton}onClick={handleSubmit}>Submit</button>
       <div className={styles.taskList}></div>
-      <button onClick={getTasks}>Get Tasks</button>
-      {taskList?.map((task,key)=>(
-        <div key={key}>
-            <h2>{task?.taskName},{task?.taskDescription}</h2>
-        </div>
-      ))}
+      <button className={styles.taskButton} onClick={getTasks}>Get Tasks</button>
+      </div>
+      
+      <div className={styles.taskListContainer}>
+        {taskList?.map((task, key) => (
+          <Task
+          key={key}
+          task={task}
+        />
+        ))}
+      </div>
     </div>
   );
 }

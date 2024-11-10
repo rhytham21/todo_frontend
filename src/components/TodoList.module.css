@@ -1,5 +1,163 @@
-.taskList{
-    display: grid;
+/* Container for the entire app */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-color: #f4f6f9;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Heading style */
+.heading {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Form container to wrap inputs and buttons */
+.formContainer {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+    transition: all 0.2s ease;
+}
+
+/* On hover, increase box-shadow */
+.formContainer:hover {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Form styling: input fields and submit button in one line */
+.formContainer form {
+    display: flex;
+    flex-direction: column; /* Stack label and input vertically */
+    gap: 15px; /* Space between the fields */
+    width: 100%;
+    margin-bottom: 20px; /* Spacing between the form and buttons */
+}
+
+/* Label styling */
+form label {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 600;
+    text-align: left;
+    width: 100%; /* Ensure the label takes full width */
+}
+
+/* Input field styling */
+form input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* On input focus */
+form input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Submit button styling */
+.submitButton {
+    background-color: #3498db;
+    color: white;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 120px;
+}
+
+.submitButton:hover {
+    background-color: #2980b9;
+}
+
+/* Task button styling (centered below the form) */
+.taskButton {
+    background-color: #3498db;
+    color: white;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 180px;
+    margin-top: 15px; /* Space between form buttons and get tasks button */
+}
+
+.taskButton:hover {
+    background-color: #2980b9;
+}
+
+/* Task List Container */
+.taskListContainer {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual task items */
+.taskListContainer div {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.taskListContainer div:last-child {
+    border-bottom: none;
+}
+
+.taskListContainer div:hover {
+    background-color: #ecf0f1;
+}
+
+/* Task title and description */
+.taskListContainer h2 {
+    font-size: 1.3rem;
+    color: #34495e;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+.taskListContainer p {
+    font-size: 1rem;
+    color: #7f8c8d;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .formContainer, .taskListContainer {
+        width: 90%;
+    }
+
+    .heading {
+        font-size: 2rem;
+    }
 }
