@@ -4,12 +4,16 @@ import Modal from "react-bootstrap/Modal";
 import styles from "./modal.module.css";
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { updateTask } from "../redux/taskSlice";
 
 function MyVerticallyCenteredModal(props) {
   const [updatedTask, setUpdatedTask] = useState({
     taskName: props?.task?.taskName || "",
     taskDescription: props?.task?.taskDescription || "",
   });
+
+  const dispatch = useDispatch();
 
   // Handle input change in the modal form
   const handleInputChange = (e) => {
@@ -27,6 +31,7 @@ function MyVerticallyCenteredModal(props) {
         `http://localhost:4001/task/update?id=${props?.task._id}`,
         { task: updatedTask }
       );
+      dispatch(updateTask(response?.data?.task))
       console.log("Update Response =>", response);
       props?.onHide(); // Close the modal
     } catch (error) {

@@ -3,17 +3,22 @@ import styles from "./task.module.css";
 import axios from "axios";
 import Modal from "./modal"; // Import the Modal component
 import MyVerticallyCenteredModal from "./modal";
+import { useDispatch } from "react-redux";
+import { deleteTask } from "../redux/taskSlice";
 
 function Task({ task }) {
   const [modalShow, setModalShow] = useState(false);
 
   console.log("Task => ", task);
 
+  const dispatch = useDispatch();
+
   const onDelete = async () => {
     try {
       const response = await axios.post(
         `http://localhost:4001/task/delete/${task?._id}`
       );
+      dispatch(deleteTask(response?.data?.task?._id));
       console.log("Response => ", response);
     } catch (error) {
       console.log("Error: ", error);
