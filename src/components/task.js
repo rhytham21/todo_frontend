@@ -16,7 +16,7 @@ function Task({ task }) {
   const onDelete = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:4001/task/delete/${task?._id}`
+        `http://localhost:4001/task/delete/${task?._id}` //using params '/' in front of url
       );
       dispatch(deleteTask(response?.data?.task?._id));
       console.log("Response => ", response);

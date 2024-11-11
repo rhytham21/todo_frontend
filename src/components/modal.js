@@ -28,7 +28,7 @@ function MyVerticallyCenteredModal(props) {
   const handleUpdate = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:4001/task/update?id=${props?.task._id}`,
+        `http://localhost:4001/task/update?id=${props?.task._id}`, //using query here instead. ?id = 
         { task: updatedTask }
       );
       dispatch(updateTask(response?.data?.task))
