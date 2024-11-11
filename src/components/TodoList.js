@@ -51,7 +51,7 @@ function TodoList() {
         return;
       }
       //POST request to add the task
-      const response = await axios.post("http://localhost:4001/task/add", {
+      const response = await axios.post("http://194.238.16.224:4001/task/add", {
         task,
       });
       //update the taskName and taskDescription in state
@@ -65,7 +65,7 @@ function TodoList() {
   const getTasks = async () => {
     try {
       //GET request to get all the tasks
-      const response = await axios.get("http://localhost:4001/task/find");
+      const response = await axios.get("http://194.238.16.224:4001/task/find");
       console.log(response?.data); //Log the fetched tasks
       //Dispatch an action to set fetched tasks
       dispatch(setTasks(response?.data?.tasks));
@@ -112,7 +112,6 @@ function TodoList() {
           Submit
         </button>
         <div className={styles.taskList}></div>
-        
       </div>
 
       <div className={styles.taskListContainer}>
