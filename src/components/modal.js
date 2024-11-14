@@ -6,8 +6,10 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { updateTask } from "../redux/taskSlice";
+import { BaseAPI } from "./data";
 
 function MyVerticallyCenteredModal(props) {
+  const token = localStorage.getItem("authToken");
   const [updatedTask, setUpdatedTask] = useState({
     taskName: props?.task?.taskName || "",
     taskDescription: props?.task?.taskDescription || "",
@@ -28,8 +30,12 @@ function MyVerticallyCenteredModal(props) {
   const handleUpdate = async () => {
     try {
       const response = await axios.post(
-        `http://194.238.16.224:4001/task/update?id=${props?.task._id}`, //using query here instead. ?id = 
-        { task: updatedTask }
+        `${BaseAPI}/task/update?id=${props?.task._id}`, //using query here instead. ?id = 
+        { task: updatedTask } , {
+          headers:{
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       dispatch(updateTask(response?.data?.task))
       console.log("Update Response =>", response);

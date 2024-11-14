@@ -4,8 +4,10 @@ import axios from "axios";
 import Task from "./task";
 import { useSelector, useDispatch } from "react-redux";
 import { addTask, setTasks } from "../redux/taskSlice";
+import { BaseAPI } from "./data";
 
 function TodoList() {
+  const token = localStorage.getItem("authToken");
   // State to manage the current task being added
   const [task, setTask] = useState({
     taskName: "",
@@ -51,9 +53,15 @@ function TodoList() {
         return;
       }
       //POST request to add the task
-      const response = await axios.post("http://194.238.16.224:4001/task/add", {
-        task,
-      });
+      const response = await axios.post(
+        "http://194.238.16.224:4001/task/add",
+        { task },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       //update the taskName and taskDescription in state
       setTask({ taskName: "", taskDescription: "" });
       // Dispatch an action to add the new task to Redux state
@@ -65,7 +73,11 @@ function TodoList() {
   const getTasks = async () => {
     try {
       //GET request to get all the tasks
-      const response = await axios.get("http://194.238.16.224:4001/task/find");
+      const response = await axios.get(`${BaseAPI}/task/find`,{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      });
       console.log(response?.data); //Log the fetched tasks
       //Dispatch an action to set fetched tasks
       dispatch(setTasks(response?.data?.tasks));

@@ -5,8 +5,11 @@ import Modal from "./modal"; // Import the Modal component
 import MyVerticallyCenteredModal from "./modal";
 import { useDispatch } from "react-redux";
 import { deleteTask } from "../redux/taskSlice";
+import { BaseAPI } from "./data";
 
 function Task({ task }) {
+  const token = localStorage.getItem("authToken");
+
   const [modalShow, setModalShow] = useState(false);
 
   console.log("Task => ", task);
@@ -16,7 +19,13 @@ function Task({ task }) {
   const onDelete = async () => {
     try {
       const response = await axios.post(
-        `http://194.238.16.224:4001/task/delete/${task?._id}` //using params '/' in front of url
+        `${BaseAPI}/task/delete/${task?._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+        } //using params '/' in front of url
       );
       dispatch(deleteTask(response?.data?.task?._id));
       console.log("Response => ", response);
