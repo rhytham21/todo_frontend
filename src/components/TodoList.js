@@ -1,60 +1,43 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./TodoList.module.css";
 import axios from "axios";
-import Task from "./task";
+import Task from "./task"; // Ensure the correct path
 import { useSelector, useDispatch } from "react-redux";
 import { addTask, setTasks } from "../redux/taskSlice";
 import { BaseAPI } from "./data";
 
 function TodoList() {
   const token = localStorage.getItem("authToken");
-  // State to manage the current task being added
+  const navigate = useNavigate();
+
   const [task, setTask] = useState({
     taskName: "",
     taskDescription: "",
   });
 
-  // State to manage the list of tasks
-  const [taskList, setTaskList] = useState([]);
-
-  //Redux setup
   const dispatch = useDispatch();
-  const { tasks } = useSelector((state) => {
-    return {
-      tasks: state.tasks.tasks, // Selecting tasks from Redux state
-    };
-  });
+  const { tasks } = useSelector((state) => ({
+    tasks: state.tasks.tasks,
+  }));
 
-  //Handler to change the taskName
   const onTaskNameChange = (event) => {
-    setTask((prev) => {
-      return { ...prev, taskName: event.target.value }; //Update the taskName in state
-    });
+    setTask((prev) => ({ ...prev, taskName: event.target.value }));
   };
 
-  //Handler to change the taskDescription
   const onDescriptionNameChange = (event) => {
-    setTask((prev) => {
-      return { ...prev, taskDescription: event.target.value }; //Update the taskDescription in state
-    });
+    setTask((prev) => ({ ...prev, taskDescription: event.target.value }));
   };
 
-  //   const handleChange = (event, field) => {
-  //     setTask((prev) => {
-  //       return { ...prev, [field]: event?.target?.value };
-  //     });
-  //   };
-
-  //Handler for task submission
   const handleSubmit = async () => {
     try {
       if (!task.taskName || !task.taskName.length) {
-        alert("Please enter task name"); //check to alert if taskName is missing
+        alert("Please enter task name");
         return;
       }
-      //POST request to add the task
+
       const response = await axios.post(
-        "http://194.238.16.224:4001/task/add",
+        `${BaseAPI}/task/add`,
         { task },
         {
           headers: {
@@ -62,24 +45,22 @@ function TodoList() {
           },
         }
       );
-      //update the taskName and taskDescription in state
+
       setTask({ taskName: "", taskDescription: "" });
-      // Dispatch an action to add the new task to Redux state
       dispatch(addTask(response?.data?.task));
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error adding task", error);
+    }
   };
 
-  //Function to fetch task from server
   const getTasks = async () => {
     try {
-      //GET request to get all the tasks
-      const response = await axios.get(`${BaseAPI}/task/find`,{
-        headers:{
-          Authorization: `Bearer ${token}`
-        }
+      const response = await axios.get(`${BaseAPI}/task/find`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      console.log(response?.data); //Log the fetched tasks
-      //Dispatch an action to set fetched tasks
+
       dispatch(setTasks(response?.data?.tasks));
     } catch (error) {
       console.error("Error fetching tasks", error);
@@ -90,40 +71,45 @@ function TodoList() {
     getTasks();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/login");
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>Todo app</h1>
 
       <div className={styles.formContainer}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <label>
-            Enter Task:{" "}
+            Enter Task:
             <input
               value={task?.taskName}
-              onChange={(event) => {
-                onTaskNameChange(event);
-              }}
+              onChange={onTaskNameChange}
               type="text"
               placeholder="Enter task title"
             />
           </label>
           <br />
           <label>
-            Enter description:{" "}
+            Enter Description:
             <input
               value={task?.taskDescription}
-              onChange={(event) => {
-                onDescriptionNameChange(event);
-              }}
+              onChange={onDescriptionNameChange}
               type="text"
               placeholder="Enter task details and deadlines"
             />
           </label>
         </form>
-        <button className={styles.submitButton} onClick={handleSubmit}>
-          Submit
-        </button>
-        <div className={styles.taskList}></div>
+        <div className={styles.buttonGroup}>
+          <button className={styles.submitButton} onClick={handleSubmit}>
+            Submit
+          </button>
+          <button className={styles.logoutButton} onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
 
       <div className={styles.taskListContainer}>

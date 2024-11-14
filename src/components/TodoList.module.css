@@ -1,4 +1,4 @@
-/* Container for the entire app */
+/* General container styling */
 .container {
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@
     font-family: 'Helvetica Neue', sans-serif;
 }
 
-/* Heading style */
+/* Header for Todo App */
 .heading {
     font-size: 2.5rem;
     color: #2c3e50;
@@ -35,27 +35,27 @@
     transition: all 0.2s ease;
 }
 
-/* On hover, increase box-shadow */
+/* Hover effect for form container */
 .formContainer:hover {
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Form styling: input fields and submit button in one line */
+/* Form styling with spacing between fields */
 .formContainer form {
     display: flex;
-    flex-direction: column; /* Stack label and input vertically */
-    gap: 15px; /* Space between the fields */
+    flex-direction: column;
+    gap: 15px;
     width: 100%;
-    margin-bottom: 20px; /* Spacing between the form and buttons */
+    margin-bottom: 20px;
 }
 
-/* Label styling */
+/* Label styling for inputs */
 form label {
     font-size: 1rem;
     color: #333;
     font-weight: 600;
     text-align: left;
-    width: 100%; /* Ensure the label takes full width */
+    width: 100%;
 }
 
 /* Input field styling */
@@ -70,10 +70,17 @@ form input {
     transition: all 0.2s ease;
 }
 
-/* On input focus */
+/* Input field focus effect */
 form input:focus {
     border-color: #3498db;
     box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Button group for aligning buttons horizontally */
+.buttonGroup {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    margin-top: 10px;
 }
 
 /* Submit button styling */
@@ -93,9 +100,9 @@ form input:focus {
     background-color: #2980b9;
 }
 
-/* Task button styling (centered below the form) */
-.taskButton {
-    background-color: #3498db;
+/* Logout button styling */
+.logoutButton {
+    background-color: #ff4d4d;
     color: white;
     font-size: 1.1rem;
     padding: 12px 20px;
@@ -103,12 +110,11 @@ form input:focus {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 180px;
-    margin-top: 15px; /* Space between form buttons and get tasks button */
+    width: 120px;
 }
 
-.taskButton:hover {
-    background-color: #2980b9;
+.logoutButton:hover {
+    background-color: #ff1a1a;
 }
 
 /* Task List Container */
@@ -137,7 +143,7 @@ form input:focus {
     background-color: #ecf0f1;
 }
 
-/* Task title and description */
+/* Task title and description styling */
 .taskListContainer h2 {
     font-size: 1.3rem;
     color: #34495e;
@@ -151,7 +157,7 @@ form input:focus {
     color: #7f8c8d;
 }
 
-/* Responsive design */
+/* Responsive Design */
 @media (max-width: 768px) {
     .formContainer, .taskListContainer {
         width: 90%;
@@ -159,5 +165,13 @@ form input:focus {
 
     .heading {
         font-size: 2rem;
+    }
+
+    .buttonGroup {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+    }
+
+    .submitButton, .logoutButton {
+        width: 100%; /* Make buttons full-width on smaller screens */
     }
 }
