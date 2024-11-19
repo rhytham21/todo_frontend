@@ -39,9 +39,9 @@ function LoginPage() {
       // };
       // nav();
       // location.
-      setTimeout(() => {
-        navigate("/todolist");
-      }, 2000);
+      
+        window.location.href="/todolist";
+      
       // navigate("/todolist", { replace: true });
       // navigate("/todolist"); // Redirect to TodoList page on successful login
     } catch (error) {
