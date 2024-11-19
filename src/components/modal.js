@@ -79,7 +79,6 @@ function MyVerticallyCenteredModal(props) {
             Update Task
           </button>
         </form>
-        Hello world
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>

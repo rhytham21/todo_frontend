@@ -5,10 +5,11 @@ import styles from "./LoginPage.module.css"; // Import modular CSS
 import { BaseAPI } from "./data";
 
 function LoginPage() {
+  // State to hold user credentials and error messages
   const [credentials, setCredentials] = useState({
     email: "",
     name: "",
-    assword: "",
+    password: "",
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
